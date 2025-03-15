@@ -6,6 +6,7 @@ import { Image } from "expo-image";
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants/theme';
 import { Id } from '@/convex/_generated/dataModel';
+import CommentsModal from './CommentsModal'; // Adjust the path as needed
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 
@@ -32,6 +33,8 @@ type PostProps = {
 export default function Post({ post }: PostProps) {
     const [isLiked, setIsLiked] = useState(post.isLiked)
     const [likesCount, setLikesCount] = useState(post.likes)
+    const [commentsCount, setCommentsCount] = useState(post.comments)
+    const [showComments, setShowComments] = useState(false)
 
     const toggleLike = useMutation(api.posts.toggleLike)
 
@@ -90,7 +93,7 @@ export default function Post({ post }: PostProps) {
                             color={isLiked ? COLORS.primary : COLORS.white}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setShowComments(true)}>
                         <Ionicons
                             name="chatbubble-outline"
                             size={22}
@@ -116,13 +119,23 @@ export default function Post({ post }: PostProps) {
                 )}
 
                 <TouchableOpacity>
-                    <Text style={styles.commentsText}>View all 2 comments</Text>
+                    <Text style={styles.commentsText}>
+                        View all {commentsCount} comments
+                    </Text>
                 </TouchableOpacity>
 
                 <Text style={styles.timeAgo}>
                     2 hours ago
                 </Text>
             </View>
+
+            <CommentsModal
+                postId={post._id}
+                visible={showComments} // might not add
+                onClose={() => setShowComments(false)}
+                onCommentAdded={() => setCommentsCount((prev => prev + 1))}
+
+            />
 
         </View>
     )
