@@ -7,6 +7,7 @@ import InitialLayout from "@/components/InitialLayout";
 import ClerkAndConvexProvider from "@/providers/ClerkAndConvexProvider";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,11 +27,13 @@ export default function RootLayout() {
   return (
     <ClerkAndConvexProvider>
       <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }} onLayout={onLayoutRootView}>
-        <InitialLayout />
-        <StatusBar style='auto' />
-      </SafeAreaView>
-    </SafeAreaProvider>
+        <GestureHandlerRootView>
+          <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }} onLayout={onLayoutRootView}>
+            <InitialLayout />
+            <StatusBar style='auto' />
+          </SafeAreaView>
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
     </ClerkAndConvexProvider >
   )
 }

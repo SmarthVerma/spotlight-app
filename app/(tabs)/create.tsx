@@ -11,6 +11,7 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
+import { set } from 'date-fns';
 
 const CreateScreen = () => {
 
@@ -43,7 +44,6 @@ const CreateScreen = () => {
             setIsSharing(true)
             const uploadUrl = await generateUploadUrl()
             console.log('this ur url', uploadUrl)
-
             const uploadResult = await FileSystem.uploadAsync(uploadUrl, selectedImage, {
                 httpMethod: "POST",
                 uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
@@ -59,11 +59,14 @@ const CreateScreen = () => {
             await createPost({ caption, storageId })
 
             router.push("/(tabs)")
+            setSelectedImage(null)
+            setCaption("")
 
         } catch (error) {
             console.log('error sharing post', error)
         } finally {
             setIsSharing(false)
+
         }
     }
 

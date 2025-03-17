@@ -1,4 +1,4 @@
-import { View, Text, Modal, KeyboardAvoidingView, Touchable, TouchableOpacity, Platform, FlatList, TextInput } from 'react-native'
+import { View, Text, Modal, KeyboardAvoidingView, Touchable, TouchableOpacity, Platform, FlatList, TextInput, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { Id } from '@/convex/_generated/dataModel';
 import { useMutation, useQueries, useQuery } from 'convex/react';
@@ -37,11 +37,11 @@ export default function CommentsModal({ onClose, onCommentAdded, postId, visible
     }
 
 
-    console.log('allComments Api ', comments?.[0]?.user.fullname)
 
     return (
         <Modal visible={visible} animationType='slide' transparent={true} onRequestClose={onClose}>
             <KeyboardAvoidingView
+                keyboardVerticalOffset={Platform.OS === "ios" ? 44 : 0}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={styles.modalContainer}
             >
@@ -56,18 +56,17 @@ export default function CommentsModal({ onClose, onCommentAdded, postId, visible
                 {comments == undefined ? (
                     <Loader />
                 ) : (
-                    <FlatList
-                        data={comments}
-                        keyExtractor={(item) => item._id}
-                        renderItem={(item) => {
-                            return (
-                                <Comment comment={item.item} />
-                            )
-                        }}
-                        contentContainerStyle={styles.commentsList}
-                        keyboardShouldPersistTaps='handled'
-                        keyboardDismissMode='on-drag'
-                    />
+
+                        <FlatList
+                            style={{ flex: 1 }}  // Make sure it fills the width
+                            data={comments}
+                            keyExtractor={(item) => item._id}
+                            renderItem={(item) => <Comment comment={item.item} />}
+                            contentContainerStyle={styles.commentsList}
+                            keyboardShouldPersistTaps="handled"
+                            keyboardDismissMode="on-drag"
+                            ListEmptyComponent={<Text style={styles.noComments}>No comments yet</Text>}
+                        />
                 )}
 
                 <View style={styles.commentInput} >

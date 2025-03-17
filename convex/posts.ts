@@ -52,13 +52,11 @@ export const getFeedPosts = query({
     const currentUser = await getAuthenticatedUser(ctx);
 
     // get all posts
-
     const posts = await ctx.db.query("posts").order("desc").collect();
 
     if (posts.length == 0) return [];
 
     //enhance the posts with user info and interaction
-
     const postsWithInfo = await Promise.all(
       posts.map(async (post) => {
         const postAuthor = (await ctx.db.get(post.userId))!;
@@ -136,5 +134,61 @@ export const toggleLike = mutation({
 
       return true; // liked
     }
+  },
+});
+
+// delete post, and bookmarks and all comments associated with it
+export const deletePost = mutation({
+  args: { postId: v.id("posts") },
+  handler: async (ctx, args) => {
+    const currentUser = await getAuthenticatedUser(ctx);
+
+    const post = await ctx.db.get(args.postId);
+    if (!post) throw new Error("Post not found");
+
+    if (post.userId !== currentUser._id) {
+      throw new Error("Unauthorized");
+    }
+
+
+    // delete all likes
+    await ctx.db
+      .query("likes")
+      .withIndex("by_post", (q) => q.eq("postId", args.postId))
+      .collect()
+      .then((likes) => {
+        likes.forEach((like) => {
+          ctx.db.delete(like._id);
+        });
+      });
+
+    // delete all bookmarks
+    await ctx.db
+      .query("bookmarks")
+      .withIndex("by_post", (q) => q.eq("postId", args.postId))
+      .collect()
+      .then((bookmarks) => {
+        bookmarks.forEach((bookmark) => {
+          ctx.db.delete(bookmark._id);
+        });
+      });
+
+    // delete all comments
+    await ctx.db
+      .query("comments")
+      .withIndex("by_post", (q) => q.eq("postId", args.postId))
+      .collect()
+      .then((comments) => {
+        comments.forEach((comment) => {
+          ctx.db.delete(comment._id);
+        });
+      });
+
+    //delete image too
+    await ctx.storage.delete(post.storageId);
+    // delete the post
+    await ctx.db.delete(args.postId);
+    // decrement the user's post count
+    await ctx.db.patch(currentUser._id, { posts: Math.max(currentUser.posts - 1, 0) });
   },
 });

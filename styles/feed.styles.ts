@@ -106,6 +106,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: COLORS.white,
     marginRight: 6,
+    marginBottom: 4,
   },
   captionContainer: {
     flexDirection: "row",
@@ -134,9 +135,9 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
   },
   modalContainer: {
+    flex: 1,
     backgroundColor: COLORS.background,
     marginBottom: Platform.OS === "ios" ? 44 : 0,
-    flex: 1,
     marginTop: Platform.OS === "ios" ? 44 : 0,
   },
   modalHeader: {
@@ -148,6 +149,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: COLORS.surface,
   },
+
   modalTitle: {
     color: COLORS.white,
     fontSize: 16,
@@ -196,6 +198,14 @@ export const styles = StyleSheet.create({
     borderTopColor: COLORS.surface,
     backgroundColor: COLORS.background,
   },
+  // Add this to your styles.js file
+  noComments: {
+    padding: 20,
+    textAlign: "center",
+    color: COLORS.grey,
+    fontSize: 16,
+    fontStyle: "italic",
+  },
   input: {
     flex: 1,
     color: COLORS.white,
@@ -217,5 +227,21 @@ export const styles = StyleSheet.create({
   centered: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  // heart animation
+  // Add these to your existing styles
+  imageContainer: {
+    position: "relative",
+    width: "100%",
+  },
+  heartAnimationContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
   },
 });

@@ -14,7 +14,6 @@ interface Comment {
 
 export default function Comment({ comment }: { comment: Comment }) {
 
-    console.log('this is comment ', comment._creationTime, typeof comment)
 
     if (!comment) return null
     return (
