@@ -195,7 +195,7 @@ export default function Post({ post }: PostProps) {
                             }
                         ]}
                     >
-                        <Ionicons name="heart" size={80} color="white" />
+                        <Ionicons name="heart" size={80} color={COLORS.primary} />
                     </Animated.View>
                 </Animated.View>
             </TapGestureHandler>

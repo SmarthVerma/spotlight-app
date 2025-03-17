@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Redirect } from 'expo-router'
 import { useAuth } from '@clerk/clerk-expo'
+import { Redirect } from 'expo-router'
+import React from 'react'
 
 const index = () => {
 

@@ -1,13 +1,11 @@
-import { SplashScreen, Stack } from "expo-router";
-import React, { useCallback } from "react";
-import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo'
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { tokenCache } from "@/cache";
 import InitialLayout from "@/components/InitialLayout";
 import ClerkAndConvexProvider from "@/providers/ClerkAndConvexProvider";
-import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
+import { SplashScreen } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React, { useCallback } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 

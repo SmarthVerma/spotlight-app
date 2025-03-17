@@ -150,7 +150,6 @@ export const deletePost = mutation({
       throw new Error("Unauthorized");
     }
 
-
     // delete all likes
     await ctx.db
       .query("likes")
@@ -184,11 +183,24 @@ export const deletePost = mutation({
         });
       });
 
+    // delete notifcation
+    await ctx.db
+      .query("notifications")
+      .withIndex("by_post", (q) => q.eq("postId", args.postId))
+      .collect()
+      .then((notifications) => {
+        notifications.forEach((notification) => {
+          ctx.db.delete(notification._id);
+        });
+      });
+
     //delete image too
     await ctx.storage.delete(post.storageId);
     // delete the post
     await ctx.db.delete(args.postId);
     // decrement the user's post count
-    await ctx.db.patch(currentUser._id, { posts: Math.max(currentUser.posts - 1, 0) });
+    await ctx.db.patch(currentUser._id, {
+      posts: Math.max(currentUser.posts - 1, 0),
+    });
   },
 });

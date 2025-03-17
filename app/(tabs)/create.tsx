@@ -1,17 +1,16 @@
-import { View, Text, Touchable, TouchableOpacity, KeyboardAvoidingView, Platform, ActivityIndicator, ScrollView, TextInput } from 'react-native'
-import React, { useState } from 'react'
-import { useRouter } from 'expo-router';
-import { useUser } from '@clerk/clerk-expo';
-import { styles } from '@/styles/create.styles';
-import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants/theme';
-import { Image } from "expo-image";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import * as ImagePicker from "expo-image-picker";
+import { styles } from '@/styles/create.styles';
+import { useUser } from '@clerk/clerk-expo';
+import { Ionicons } from '@expo/vector-icons';
+import { useMutation } from 'convex/react';
 import * as FileSystem from "expo-file-system";
-import { set } from 'date-fns';
+import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { ActivityIndicator, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const CreateScreen = () => {
 

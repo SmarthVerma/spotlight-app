@@ -7,19 +7,17 @@ import { api } from "@/convex/_generated/api";
 import { styles } from "@/styles/feed.styles";
 import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
-import { useConvex, useMutation, useQuery } from "convex/react";
-import { Link } from "expo-router";
-import { useState, useRef, useEffect } from "react";
+import { useConvex, useQuery } from "convex/react";
+import { useRef, useState } from "react";
 import {
   Alert,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-  RefreshControl,
   Animated,
-  StatusBar
+  RefreshControl,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
 
 export default function Index() {
