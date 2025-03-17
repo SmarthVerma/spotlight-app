@@ -204,3 +204,58 @@ export const deletePost = mutation({
     });
   },
 });
+
+export const getPostsByUser = query({
+  args: { userId: v.optional(v.id("users")) },
+  handler: async (ctx, args) => {
+    const user = args.userId
+      ? await ctx.db.get(args.userId)
+      : await getAuthenticatedUser(ctx);
+
+    if (!user) throw new Error("User not found");
+
+    const posts = await ctx.db
+      .query("posts")
+      .withIndex("by_user", (q) => q.eq("userId", user._id))
+      .order("desc")
+      .collect();
+
+    if (posts.length === 0) return [];
+
+    const currentUser = await getAuthenticatedUser(ctx);
+
+    // Enhance posts with author info and interaction state
+    const postsWithInfo = await Promise.all(
+      posts.map(async (post) => {
+        const postAuthor = await ctx.db.get(post.userId);
+
+        const isLiked = await ctx.db
+          .query("likes")
+          .withIndex("by_user_and_post", (q) =>
+            q.eq("userId", currentUser._id).eq("postId", post._id)
+          )
+          .first();
+
+        const bookmark = await ctx.db
+          .query("bookmarks")
+          .withIndex("by_user_and_post", (q) =>
+            q.eq("userId", currentUser._id).eq("postId", post._id)
+          )
+          .first();
+
+        return {
+          ...post,
+          author: {
+            id: postAuthor?._id,
+            username: postAuthor?.username,
+            image: postAuthor?.image,
+          },
+          isLiked: !!isLiked,
+          isBookmarked: !!bookmark,
+        };
+      })
+    );
+
+    return postsWithInfo;
+  },
+});
