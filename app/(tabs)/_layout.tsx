@@ -6,7 +6,6 @@ import React from 'react'
 
 const TabLayout = () => {
     return (
-        <AuthProvider>
             <Tabs
                 screenOptions={{
                     tabBarShowLabel: false,
@@ -54,7 +53,6 @@ const TabLayout = () => {
                     }}
                 />
             </Tabs>
-        </AuthProvider>
     )
 }
 

@@ -212,6 +212,7 @@ export const getPostsByUser = query({
       ? await ctx.db.get(args.userId)
       : await getAuthenticatedUser(ctx);
 
+    console.log("hellooo!");
     if (!user) throw new Error("User not found");
 
     const posts = await ctx.db

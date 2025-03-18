@@ -1,4 +1,4 @@
-import { View, Text, Modal, KeyboardAvoidingView, Touchable, TouchableOpacity, Platform, FlatList, TextInput, ScrollView } from 'react-native'
+import { View, Text, Modal, KeyboardAvoidingView, Touchable, TouchableOpacity, Platform, TextInput, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { Id } from '@/convex/_generated/dataModel';
 import { useMutation, useQueries, useQuery } from 'convex/react';
@@ -8,6 +8,7 @@ import { COLORS } from '@/constants/theme';
 import { styles } from '@/styles/feed.styles';
 import Loader from './Loader';
 import Comment from "@/components/Comment";
+import { FlatList } from 'react-native-gesture-handler';
 
 type CommentsModal = {
     postId: Id<"posts">;

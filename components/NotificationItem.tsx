@@ -13,7 +13,7 @@ export const NotificationItem = ({ notification }: { notification: any }) => {
     return (
         <View style={styles.notificationItem}>
             <View style={styles.notificationContent}>
-                <Link href={`/(tabs)/create`} asChild>
+                <Link href={`/user/${notification.sender._id}`} asChild>
                     <TouchableOpacity style={styles.avatarContainer}>
                         <Image
                             source={notification?.sender?.image}
@@ -34,7 +34,7 @@ export const NotificationItem = ({ notification }: { notification: any }) => {
                 </Link>
 
                 <View style={styles.notificationInfo}>
-                    <Link href={"/notification"} asChild>
+                    <Link href={`/user/${notification.sender._id}`} asChild>
                         <TouchableOpacity>
                             <Text style={styles.username}>
                                 {notification?.sender.username}

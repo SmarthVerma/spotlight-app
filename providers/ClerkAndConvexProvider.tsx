@@ -4,6 +4,7 @@ import { ClerkLoaded, ClerkProvider, useAuth } from '@clerk/clerk-expo'
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ConvexReactClient } from "convex/react";
 import { tokenCache } from '@/cache'
+import { AuthProvider } from './AuthContext';
 
 export default function ClerkAndConvexProvider({ children }: { children: React.ReactNode }) {
 
@@ -23,7 +24,9 @@ export default function ClerkAndConvexProvider({ children }: { children: React.R
             <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
                 <View style={{ flex: 1 }}>
                     <ClerkLoaded>
-                        {children}
+                        <AuthProvider>
+                            {children}
+                        </AuthProvider>
                     </ClerkLoaded>
                 </View>
             </ConvexProviderWithClerk>

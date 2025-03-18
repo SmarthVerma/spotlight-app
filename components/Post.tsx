@@ -35,7 +35,6 @@ type PostProps = {
 export default function Post({ post }: PostProps) {
     const [isLiked, setIsLiked] = useState(post.isLiked)
     const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked)
-    const [likesCount, setLikesCount] = useState(post.likes)
     const [commentsCount, setCommentsCount] = useState(post.comments)
     const [showComments, setShowComments] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
@@ -101,7 +100,6 @@ export default function Post({ post }: PostProps) {
 
             const newIsLiked = await toggleLike({ postId: post._id })
             setIsLiked(newIsLiked)
-            setLikesCount((count) => (newIsLiked ? count + 1 : count - 1))
         } catch (error) {
             console.log("Error liking the post", error)
         }
@@ -141,7 +139,7 @@ export default function Post({ post }: PostProps) {
     return (
         <View style={styles.post} >
             <View style={styles.postHeader}>
-                <Link href="/(tabs)/notification" asChild >
+                <Link href={authUserId === post.author.id ? "/(tabs)/profile": `/user/${post.author.id}`} asChild >
                     <TouchableOpacity style={styles.postHeaderLeft}>
                         <Image
                             source={post?.author?.image}
@@ -226,7 +224,7 @@ export default function Post({ post }: PostProps) {
             {/* POST INFO */}
             <View style={styles.postInfo}>
                 <Text style={styles.likesText}>
-                    {likesCount > 0 ? `${likesCount.toLocaleString()} likes` : "Be the first to like"}
+                    {post.likes > 0 ? `${post.likes.toLocaleString()} likes` : "Be the first to like"}
                 </Text>
                 {post.caption && (
                     <View style={styles.captionContainer}>

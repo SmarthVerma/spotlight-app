@@ -8,6 +8,7 @@ import { styles } from "@/styles/feed.styles";
 import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { useConvex, useQuery } from "convex/react";
+import { set } from "date-fns";
 import { useRef, useState } from "react";
 import {
   Alert,
@@ -39,11 +40,13 @@ export default function Index() {
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      await convex.q
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 3000);
     } catch (error) {
       console.error("Error refreshing posts:", error);
     } finally {
-      setRefreshing(false);
+
     }
   };
 
@@ -146,8 +149,7 @@ export default function Index() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={[COLORS.primary]}
-            tintColor={COLORS.white}
+            tintColor={COLORS.primary}
           />
         }
       />

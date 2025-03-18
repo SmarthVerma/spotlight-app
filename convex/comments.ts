@@ -63,7 +63,6 @@ export const getComments = query({
       })
     );
 
-    console.log('the commensWithInfo', commentsWithInfo)
     return commentsWithInfo;
   },
 });
