@@ -12,6 +12,7 @@ const TabLayout = () => {
                     headerShown: false,
                     tabBarActiveTintColor: COLORS.primary,
                     tabBarInactiveTintColor: COLORS.grey,
+                    tabBarHideOnKeyboard: true,
                     tabBarStyle: {
                         backgroundColor: "black",
                         borderTopWidth: 0,

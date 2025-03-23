@@ -18,7 +18,7 @@ const CreateScreen = () => {
     const { user } = useUser();
 
     const [caption, setCaption] = useState("");
-    const [selectedImage, setSelectedImage] = useState<string | null>(null)
+    const [selectedImage, setSelectedImage] = useState<string | null>(true)
     const [isSharing, setIsSharing] = useState(false);
 
 

@@ -56,7 +56,7 @@ const ProfileScreen = () => {
             <View style={styles.avatarContainer}>
               <Image
                 source={{ uri: currentUser.image }}
-                style={styles.avatar}
+                style={styles.avatar} 
                 contentFit="cover"
                 transition={200}
               />
